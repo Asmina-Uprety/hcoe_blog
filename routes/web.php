@@ -25,7 +25,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::prefix('admin')->group(function () {
         Route::resource('/categories','CategoryController');
         Route::get('/categories/{id}/complete','CategoryController@complete');
-
+        
+        Route::resource('/blogs','BlogController');
     });
 
 

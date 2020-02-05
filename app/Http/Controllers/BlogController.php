@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
+use App\Category;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -24,7 +25,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.blog.create');
     }
 
     /**
@@ -35,7 +36,18 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $blog = new Blog();
+
+        // return $request;
+
+        // return $request->image->getClientOriginalName();
+
+        // $blog->save();
+        $categories = Category::find($request->category_id);
+
+        // return $categories;
+
+        $blog->categories()->attach($categories);
     }
 
     /**

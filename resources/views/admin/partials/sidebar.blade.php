@@ -10,7 +10,7 @@
                     <a href="{{ route('categories.index') }}">View all categories</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="">Add new Post</a>
+                    <a href="{{ route('blogs.create') }}">Add new Post</a>
                 </li>
                 <li class="list-group-item">
                     <a href="">View all posts</a>
