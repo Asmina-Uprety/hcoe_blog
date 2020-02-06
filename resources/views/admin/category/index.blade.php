@@ -39,7 +39,9 @@
                         <td>
                             <input size=1 class="form-control" type="text" name="order" value="{{ $category->order_number }}">
                         </td>
-                        <td>10</td>
+                        <td>
+                            {{$category->blogs->count()}}
+                        </td>
                         <td>
                         <div class="dropdown show">
                             <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

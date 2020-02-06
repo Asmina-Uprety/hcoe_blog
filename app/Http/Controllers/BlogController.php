@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Auth;
 
 class BlogController extends Controller
 {
@@ -15,7 +17,12 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        // return Blog::all();
+        $blogs = Blog::
+                with('user')
+                ->with('categories')
+                ->get();
+        return view('admin.blog.index',compact('blogs'));
     }
 
     /**
@@ -37,17 +44,27 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $blog = new Blog();
+        $blog->user_id = Auth::user()->id;
+        $blog->title = $request->title;
+        $blog->slug = Str::slug($request->title);
+        $blog->description = $request->description;
+        $blog->excerpt = $request->excerpt;
 
-        // return $request;
+        $imageName = $blog->slug."-".time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images'), $imageName);
+        $blog->image = $imageName;
 
-        // return $request->image->getClientOriginalName();
+        $blog->video = $request->video;
+        $blog->status = ($request->has('status'))?1:0;
 
-        // $blog->save();
+        $blog->save();
+        
         $categories = Category::find($request->category_id);
 
         // return $categories;
 
         $blog->categories()->attach($categories);
+        return redirect()->route('blogs.index')->withStatus('Blog added');
     }
 
     /**
